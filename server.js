@@ -1,7 +1,6 @@
-/**
+﻿/**
  * GeoGuard-AI: AI-Powered Landslide Susceptibility Prediction System
  * Full-Stack Node.js Server
- * Built with native Node.js HTTP (zero external dependencies required for 100% portability)
  */
 
 const http = require("http");
@@ -43,7 +42,7 @@ function parseBody(req) {
     let body = "";
     req.on("data", chunk => {
       body += chunk.toString();
-      if (body.length > 5 * 1024 * 1024) { // 5MB limit
+      if (body.length > 5 * 1024 * 1024) { 
         reject(new Error("Payload too large"));
       }
     });
@@ -63,7 +62,6 @@ function parseBody(req) {
 }
 
 const server = http.createServer(async (req, res) => {
-  // Handle CORS Preflight
   if (req.method === "OPTIONS") {
     res.writeHead(204, {
       "Access-Control-Allow-Origin": "*",
@@ -77,11 +75,6 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
 
-  // ==========================================
-  // REST API ROUTES
-  // ==========================================
-
-  // 1. GET /api/nodes -> Return spatial GIS nodes
   if (req.method === "GET" && pathname === "/api/nodes") {
     const limit = parseInt(parsedUrl.query.limit, 10) || 600;
     const zone = parsedUrl.query.zone || "All";
@@ -91,7 +84,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 2. POST /api/predict -> Single-point slope risk evaluation & advisory
   if (req.method === "POST" && pathname === "/api/predict") {
     try {
       const body = await parseBody(req);
@@ -99,28 +91,18 @@ const server = http.createServer(async (req, res) => {
       const features = body.features || body;
       const prediction = aiEngine.predict(features, model);
       const advisory = generateGeotechnicalAdvisory(features, prediction.probability);
-      sendJSON(res, 200, {
-        success: true,
-        prediction,
-        advisory
-      });
+      sendJSON(res, 200, { success: true, prediction, advisory });
     } catch (err) {
       sendJSON(res, 400, { success: false, error: err.message });
     }
     return;
   }
 
-  // 3. GET /api/benchmarks -> Model evaluation metrics, ROC curves, feature importances
   if (req.method === "GET" && pathname === "/api/benchmarks") {
-    sendJSON(res, 200, {
-      success: true,
-      metrics: aiEngine.metrics,
-      zones: SUSCEPTIBILITY_ZONES
-    });
+    sendJSON(res, 200, { success: true, metrics: aiEngine.metrics, zones: SUSCEPTIBILITY_ZONES });
     return;
   }
 
-  // 4. POST /api/simulate-storm -> Monsoon cloudburst anomaly simulation
   if (req.method === "POST" && pathname === "/api/simulate-storm") {
     try {
       const body = await parseBody(req);
@@ -135,7 +117,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 5. POST /api/batch-predict -> High-throughput survey batch evaluation
   if (req.method === "POST" && pathname === "/api/batch-predict") {
     try {
       const body = await parseBody(req);
@@ -144,13 +125,7 @@ const server = http.createServer(async (req, res) => {
       const results = records.map(r => {
         const pred = aiEngine.predict(r, model);
         const zoneInfo = classifyZone(pred.probability);
-        return {
-          ...r,
-          pred_susceptibility: pred.probability,
-          hazard_zone: zoneInfo.zone,
-          alert_level: zoneInfo.alertLevel,
-          zone_color: zoneInfo.color
-        };
+        return { ...r, pred_susceptibility: pred.probability, hazard_zone: zoneInfo.zone, alert_level: zoneInfo.alertLevel, zone_color: zoneInfo.color };
       });
       sendJSON(res, 200, { success: true, total: results.length, results });
     } catch (err) {
@@ -159,7 +134,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 6. GET /api/export-geojson -> Export nodes in standard GIS GeoJSON format
   if (req.method === "GET" && pathname === "/api/export-geojson") {
     const limit = parseInt(parsedUrl.query.limit, 10) || 1000;
     const model = parsedUrl.query.model || "XGBoost";
@@ -174,7 +148,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 7. GET /api/sample-csv -> Download demo CSV template
   if (req.method === "GET" && pathname === "/api/sample-csv") {
     const sampleNodes = dataStore.records.slice(0, 30);
     if (sampleNodes.length === 0) {
@@ -195,12 +168,8 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // ==========================================
-  // STATIC FILE SERVING (Tailwind Frontend)
-  // ==========================================
   let filePath = path.join(PUBLIC_DIR, pathname === "/" ? "index.html" : pathname);
   
-  // Prevent directory traversal attacks
   if (!filePath.startsWith(PUBLIC_DIR)) {
     res.writeHead(403);
     res.end("Forbidden");
@@ -213,7 +182,6 @@ const server = http.createServer(async (req, res) => {
   fs.readFile(filePath, (err, content) => {
     if (err) {
       if (err.code === "ENOENT") {
-        // Fallback to index.html for single-page routing
         fs.readFile(path.join(PUBLIC_DIR, "index.html"), (err2, fallback) => {
           if (err2) {
             res.writeHead(404, { "Content-Type": "text/plain" });
@@ -232,13 +200,17 @@ const server = http.createServer(async (req, res) => {
       res.end(content);
     }
   });
-}); } module.exports = server;
+});
 
-if (process.env.NODE_ENV !== 'production') { server.listen(PORT, () => {
-  console.log(`\n` + "=".repeat(65));
-  console.log(`🛡️  GeoGuard-AI Full-Stack Node.js Server Running`);
-  console.log(`📍 URL: http://localhost:${PORT}`);
-  console.log(`📦 Loaded: ${dataStore.records.length} spatial survey points`);
-  console.log(`⚡ Tailwind CSS + Leaflet GIS + AI Inference Ready`);
-  console.log("=".repeat(65) + `\n`);
-}); } module.exports = server;
+if (process.env.NODE_ENV !== 'production') {
+  server.listen(PORT, () => {
+    console.log(`\n` + "=".repeat(65));
+    console.log(`🛡️  GeoGuard-AI Full-Stack Node.js Server Running`);
+    console.log(`📍 URL: http://localhost:${PORT}`);
+    console.log(`📦 Loaded: ${dataStore.records.length} spatial survey points`);
+    console.log(`⚡ Tailwind CSS + Leaflet GIS + AI Inference Ready`);
+    console.log("=".repeat(65) + `\n`);
+  });
+}
+
+module.exports = server;
