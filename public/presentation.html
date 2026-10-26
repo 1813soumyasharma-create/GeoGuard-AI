@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentation Deck | GeoGuard-AI Landslide Susceptibility</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .slide-enter {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+
+  <!-- Presentation Top Bar -->
+  <header class="bg-slate-900 border-b border-slate-800 px-6 py-3 flex items-center justify-between z-20">
+    <div class="flex items-center space-x-3">
+      <span class="text-xl">🛡️</span>
+      <div>
+        <h1 class="text-sm font-bold text-white tracking-wide">GeoGuard-AI &bull; Capstone Project Presentation</h1>
+        <p class="text-[11px] text-slate-400">Department of Computer Science & Civil Engineering</p>
+      </div>
+    </div>
+
+    <!-- Navigation & Counter -->
+    <div class="flex items-center space-x-4">
+      <span id="slide-indicator" class="text-xs font-mono bg-slate-800 border border-slate-700 px-2.5 py-1 rounded text-slate-300">
+        Slide 1 / 19
+      </span>
+      <div class="flex space-x-1">
+        <button onclick="prevSlide()" class="p-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded border border-slate-700 text-xs font-bold transition">◀ Prev</button>
+        <button onclick="nextSlide()" class="p-1.5 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-bold transition">Next ▶</button>
+      </div>
+      <a href="/" target="_blank" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded font-medium flex items-center space-x-1 transition shadow-sm">
+        <span>🗺️ Live App Demo</span>
+      </a>
+      <button onclick="toggleFullscreen()" class="p-1.5 px-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 text-xs">⛶</button>
+    </div>
+  </header>
+
+  <!-- Slide Canvas Container -->
+  <main class="flex-1 flex items-center justify-center p-4 sm:p-8">
+    <div id="slide-card" class="w-full max-w-5xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 sm:p-12 relative overflow-hidden min-h-[580px] flex flex-col justify-between slide-enter">
+      
+      <!-- Slide Content Injected by JS -->
+      <div id="slide-body" class="flex-1"></div>
+
+      <!-- Slide Footer -->
+      <div class="pt-6 mt-6 border-t border-slate-800 flex justify-between items-center text-[11px] text-slate-500">
+        <span>GeoGuard-AI: AI-Powered Prediction of Landslide Susceptibility & Early Warning System</span>
+        <span class="font-mono">Use &larr; &rarr; Arrow Keys to Navigate</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Slide Deck Definition Script -->
+  <script>
+    const slides = [
+      // Slide 1: Topic
+      {
+        title: "Name of Topic",
+        render: () => `
+          <div class="text-center py-10 space-y-6">
+            <span class="inline-block text-xs uppercase tracking-widest font-bold px-3 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full">
+              Third-Year Engineering Capstone Project
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+              AI-Powered Prediction of Landslide Susceptibility & Early Warning System
+            </h1>
+            <p class="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto">
+              A Multi-Factor Machine Learning & Spatial Remote Sensing Framework for Geotechnical Hazard Zonation & Dynamic Cloudburst Early Warning
+            </p>
+            <div class="flex justify-center items-center space-x-4 pt-4 text-xs text-slate-400">
+              <span class="px-3 py-1.5 bg-slate-800/80 rounded-md border border-slate-700">🔬 Geotechnical Soil Mechanics</span>
+              <span class="px-3 py-1.5 bg-slate-800/80 rounded-md border border-slate-700">🛰️ Spatial GIS Remote Sensing</span>
+              <span class="px-3 py-1.5 bg-slate-800/80 rounded-md border border-slate-700">🤖 Machine Learning Ensembles</span>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 2: Name of Students
+      {
+        title: "Name of Students",
+        render: () => `
+          <div class="space-y-6">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Project Team & Mentorship</span>
+              <h2 class="text-2xl font-bold text-white">Student Investigators & Project Guides</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 space-y-1">
+                <span class="text-xs font-bold text-blue-400">STUDENT 1 (Team Lead)</span>
+                <p class="text-base font-bold text-white">[Student Name 1]</p>
+                <p class="text-xs text-slate-400">Roll No: [Roll No. 1] &bull; B.Tech CSE (VI Semester)</p>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 space-y-1">
+                <span class="text-xs font-bold text-blue-400">STUDENT 2 (GIS & Data Engineering)</span>
+                <p class="text-base font-bold text-white">[Student Name 2]</p>
+                <p class="text-xs text-slate-400">Roll No: [Roll No. 2] &bull; B.Tech CSE / Civil (VI Semester)</p>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 space-y-1">
+                <span class="text-xs font-bold text-blue-400">STUDENT 3 (ML Modeling & Benchmarking)</span>
+                <p class="text-base font-bold text-white">[Student Name 3]</p>
+                <p class="text-xs text-slate-400">Roll No: [Roll No. 3] &bull; B.Tech CSE (VI Semester)</p>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 space-y-1">
+                <span class="text-xs font-bold text-blue-400">STUDENT 4 (Full-Stack UI & EWS Simulation)</span>
+                <p class="text-base font-bold text-white">[Student Name 4]</p>
+                <p class="text-xs text-slate-400">Roll No: [Roll No. 4] &bull; B.Tech CSE (VI Semester)</p>
+              </div>
+            </div>
+            <div class="p-4 rounded-xl bg-blue-950/30 border border-blue-800/40 flex justify-between items-center text-xs">
+              <div>
+                <span class="text-blue-400 font-bold">Project Supervisor / Guide:</span>
+                <p class="text-slate-200 font-semibold mt-0.5">Prof. / Dr. [Guide Name], Department of Computer Science & Engineering</p>
+              </div>
+              <div class="text-right">
+                <span class="text-slate-400">[Institution Name & Department]</span>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 3: Table of Content
+      {
+        title: "Table of Content",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Overview</span>
+              <h2 class="text-2xl font-bold text-white">Table of Content</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="space-y-2">
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">01.</span><span>Introduction & Geomorphology</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">02.</span><span>Background and Problem Statement</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">03.</span><span>Dataset and Data Collection (14 Factors)</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">04.</span><span>Data Preprocessing & Multi-Collinearity</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">05.</span><span>Proposed Methodology & Mohr-Coulomb</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">06.</span><span>Baseline / Comparative Models</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">07.</span><span>Performance Evaluation Matrix</span></div>
+              </div>
+              <div class="space-y-2">
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">08.</span><span>Results & Discussion (Hazard Zonation)</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">09.</span><span>Sensitivity Analysis (Feature Ranking)</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">10.</span><span>Disaster-Management Implications</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">11.</span><span>Limitations & Constraints</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">12.</span><span>Future Scope (IoT Telemetry & ST-GNNs)</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">13.</span><span>Conclusion & References</span></div>
+                <div class="p-2.5 rounded bg-slate-800/40 border border-slate-800 flex items-center space-x-3"><span class="text-blue-400 font-bold font-mono">14.</span><span>Questions & Oral Defense</span></div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 4: Introduction
+      {
+        title: "Introduction",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 1</span>
+              <h2 class="text-2xl font-bold text-white">Introduction</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+              <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2">
+                <span class="text-xl">🏔️</span>
+                <h3 class="font-bold text-white text-sm">Landslide Mechanics</h3>
+                <p class="text-slate-400 leading-relaxed">
+                  Rapid mass wasting involving downward gravitational shear failure of rock mass, weathered regolith, and debris along critical slip surfaces.
+                </p>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2">
+                <span class="text-xl">🗺️</span>
+                <h3 class="font-bold text-white text-sm">Susceptibility Mapping (LSM)</h3>
+                <p class="text-slate-400 leading-relaxed">
+                  Spatial demarcation of terrain into quantitative probability zones (Very Low to Very High) identifying slopes near critical equilibrium.
+                </p>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2">
+                <span class="text-xl">🚨</span>
+                <h3 class="font-bold text-white text-sm">Proactive Paradigm</h3>
+                <p class="text-slate-400 leading-relaxed">
+                  Moving disaster management from reactive post-event clearance to real-time predictive hazard monitoring and early evacuation alerts.
+                </p>
+              </div>
+            </div>
+            <div class="p-3 bg-blue-900/20 border border-blue-800/30 rounded-lg text-xs text-blue-300">
+              <b>Core Objective:</b> Integrate remote sensing factors with geotechnical mechanics and machine learning algorithms to automate regional hazard zonation and actionable mitigation planning.
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 5: Background and Problem Statement
+      {
+        title: "Background and Problem Statement",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-rose-400 tracking-wider">Chapter 2</span>
+              <h2 class="text-2xl font-bold text-white">Background & Problem Statement</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div class="p-4 rounded-xl bg-rose-950/20 border border-rose-900/40 space-y-2">
+                <h3 class="font-bold text-rose-300 text-sm">Socioeconomic Challenge</h3>
+                <ul class="list-disc list-inside text-slate-300 space-y-1.5 leading-relaxed">
+                  <li>Mountainous terrains (Western Ghats, Wayanad 2024, Himalayas) suffer catastrophic monsoon debris torrents.</li>
+                  <li>Over 300 lives lost annually and national highway transit severances costing millions in infrastructure damage.</li>
+                </ul>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700 space-y-2">
+                <h3 class="font-bold text-white text-sm">Limitations of Classical LEM</h3>
+                <ul class="list-disc list-inside text-slate-300 space-y-1.5 leading-relaxed">
+                  <li><b>Limit Equilibrium (Bishop/Janbu):</b> Requires localized boreholes, core extraction, and triaxial shear testing.</li>
+                  <li>Works for a <i>single 50m slope profile</i>, but is <b>financially and computationally intractable over hundreds of km²</b>.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-700 text-xs">
+              <b class="text-blue-400">Formal Problem Statement:</b>
+              <p class="text-slate-200 mt-1 italic leading-relaxed">
+                "To develop an automated, high-precision AI prototype capable of predicting regional slope susceptibility across 14 multi-disciplinary conditioning factors, with real-time early warning under dynamic cloudburst rainfall scenarios."
+              </p>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 6: Dataset and Data Collection
+      {
+        title: "Dataset and Data Collection",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 3</span>
+              <h2 class="text-2xl font-bold text-white">Dataset & Data Collection (14 Conditioning Factors)</h2>
+            </div>
+            <p class="text-xs text-slate-400">Synthesized across a 3,000-node mountainous terrain grid (35km &times; 35km testbed corridor):</p>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
+              <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700 text-center">
+                <b class="text-blue-400 block mb-1">Morphometric</b>
+                <span class="text-slate-300 text-[11px]">Slope (0°-65°)<br>Elevation (300-2200m)<br>Aspect (0°-360°)<br>Plan & Profile Curvature</span>
+              </div>
+              <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700 text-center">
+                <b class="text-cyan-400 block mb-1">Hydrological</b>
+                <span class="text-slate-300 text-[11px]">72h Rainfall (10-500mm)<br>TWI (ln(a/tan&beta;))<br>Dist. to Streams (m)</span>
+              </div>
+              <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700 text-center">
+                <b class="text-amber-400 block mb-1">Anthropogenic</b>
+                <span class="text-slate-300 text-[11px]">Distance to Road Cuts<br>Unsupported toe excavation<br>Blasting micro-cracks</span>
+              </div>
+              <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700 text-center">
+                <b class="text-emerald-400 block mb-1">Geological</b>
+                <span class="text-slate-300 text-[11px]">Bedrock Lithology (6)<br>Soil Profile (5)<br>Dist. to Faults (m)</span>
+              </div>
+              <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700 text-center">
+                <b class="text-green-400 block mb-1">Ecological</b>
+                <span class="text-slate-300 text-[11px]">Satellite NDVI<br>Land Use / Land Cover<br>Root tensile cohesion</span>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 7: Data Preprocessing
+      {
+        title: "Data Preprocessing",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 4</span>
+              <h2 class="text-2xl font-bold text-white">Data Preprocessing & Multi-Collinearity</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div class="space-y-3">
+                <div class="p-3 bg-slate-800/40 rounded border border-slate-700">
+                  <b class="text-white">1. Physical Range Clamping & Cleaning</b>
+                  <p class="text-slate-400 mt-1">Bound attributes to geotechnically physical limits (Slope &le; 65°, NDVI -0.1 to 0.88).</p>
+                </div>
+                <div class="p-3 bg-slate-800/40 rounded border border-slate-700">
+                  <b class="text-white">2. Categorical Encoding (One-Hot)</b>
+                  <p class="text-slate-400 mt-1">Transformed non-ordinal attributes: 6 Lithology units, 5 Soil classes, 6 Land Use types.</p>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <div class="p-3 bg-slate-800/40 rounded border border-slate-700">
+                  <b class="text-white">3. Standardization (Z-Score Scaling)</b>
+                  <p class="text-slate-400 mt-1">Continuous numerical variables centered to zero-mean (&mu;=0) and unit-variance (&sigma;=1).</p>
+                </div>
+                <div class="p-3 bg-slate-800/40 rounded border border-slate-700">
+                  <b class="text-white">4. Multi-Collinearity Check (VIF)</b>
+                  <p class="text-slate-400 mt-1">Variance Inflation Factors verified &lt; 4.2 (safely below threshold of 10.0).</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-2.5 bg-slate-800/60 rounded text-center text-xs text-slate-300">
+              <b>Stratified Split:</b> 80% Training (2,400 survey nodes) &bull; 20% Independent Testing (600 survey nodes)
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 8: Proposed Methodology
+      {
+        title: "Proposed Methodology",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 5</span>
+              <h2 class="text-2xl font-bold text-white">Proposed Methodology: Physics-Informed AI</h2>
+            </div>
+            <div class="p-4 bg-slate-800/60 rounded-xl border border-slate-700 text-xs font-mono text-center text-slate-300">
+              [ Survey & DEM Remote Sensing ] ➔ [ Z-Score & One-Hot Pipeline ] ➔ [ Multi-Model ML Ensemble ]
+              <br>⬇<br>
+              [ Continuous Probabilistic Index P(Failure) ∈ [0.0, 1.0] ]
+              <br>⬇<br>
+              [ GSI/USGS 5-Tier Hazard Zonation ] + [ Geotechnical Mitigation Engine (Nails/Drains/Bio) ]
+            </div>
+            <div class="p-4 bg-blue-950/20 border border-blue-800/40 rounded-xl text-xs space-y-2">
+              <b class="text-blue-300">Geotechnical Foundation: The Mohr-Coulomb Criterion</b>
+              <div class="p-2 bg-slate-900 rounded text-emerald-400 font-mono text-center">
+                FoS = [ c' + (&sigma;_n - u_w) &middot; tan(&phi;') ] / [ &gamma; &middot; z &middot; sin(&beta;) &middot; cos(&beta;) ]
+              </div>
+              <p class="text-slate-400">Rainfall increases pore water pressure <i>u_w</i>, reducing effective normal stress (&sigma;' = &sigma;_n - u_w) and triggering failure.</p>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 9: Baseline/Comparative Models
+      {
+        title: "Baseline/Comparative Models",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 6</span>
+              <h2 class="text-2xl font-bold text-white">Baseline / Comparative Models</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-1.5">
+                <b class="text-blue-400 text-sm">1. XGBoost (Gradient Boosting)</b>
+                <p class="text-slate-300 leading-relaxed">Sequential gradient-boosted decision trees optimizing regularized log-loss. 160 estimators, &eta;=0.07, max depth 5.</p>
+              </div>
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-1.5">
+                <b class="text-emerald-400 text-sm">2. Random Forest Classifier</b>
+                <p class="text-slate-300 leading-relaxed">Bootstrap bagged ensemble of 180 decorrelated decision trees. Exceptional at handling threshold effects and non-linearities.</p>
+              </div>
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-1.5">
+                <b class="text-purple-400 text-sm">3. Multi-Layer Perceptron (ANN)</b>
+                <p class="text-slate-300 leading-relaxed">Deep feedforward neural network (64-32 architecture) with ReLU activations and Adam optimizer.</p>
+              </div>
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-1.5">
+                <b class="text-amber-400 text-sm">4. Logistic Regression</b>
+                <p class="text-slate-300 leading-relaxed">Standard parametric linear statistical baseline mapping log-odds via the sigmoid activation function.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 10: Performance Evaluation
+      {
+        title: "Performance Evaluation",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-emerald-400 tracking-wider">Chapter 7</span>
+              <h2 class="text-2xl font-bold text-white">Performance Evaluation Matrix (600 Test Nodes)</h2>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-slate-300">
+                <thead class="bg-slate-800 text-slate-400 uppercase text-[11px]">
+                  <tr>
+                    <th class="py-2.5 px-3">Algorithm</th>
+                    <th class="py-2.5 px-3">Accuracy</th>
+                    <th class="py-2.5 px-3">Precision</th>
+                    <th class="py-2.5 px-3 font-bold text-blue-400">Recall (Sensitivity)</th>
+                    <th class="py-2.5 px-3">F1-Score</th>
+                    <th class="py-2.5 px-3 font-bold text-blue-400">ROC-AUC</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                  <tr class="bg-blue-950/20 font-bold text-white">
+                    <td class="py-2.5 px-3 text-blue-400">🏆 XGBoost Classifier</td>
+                    <td class="py-2.5 px-3">89.00%</td>
+                    <td class="py-2.5 px-3">0.9096</td>
+                    <td class="py-2.5 px-3">0.8988</td>
+                    <td class="py-2.5 px-3">0.9041</td>
+                    <td class="py-2.5 px-3 text-blue-400">0.9579</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-semibold text-emerald-400">Random Forest</td>
+                    <td class="py-2.5 px-3">87.17%</td>
+                    <td class="py-2.5 px-3">0.8665</td>
+                    <td class="py-2.5 px-3 text-emerald-400 font-bold">0.9191</td>
+                    <td class="py-2.5 px-3">0.8920</td>
+                    <td class="py-2.5 px-3">0.9546</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-semibold">Logistic Regression</td>
+                    <td class="py-2.5 px-3">87.17%</td>
+                    <td class="py-2.5 px-3">0.9062</td>
+                    <td class="py-2.5 px-3">0.8671</td>
+                    <td class="py-2.5 px-3">0.8863</td>
+                    <td class="py-2.5 px-3">0.9482</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-semibold">Neural Network (MLP)</td>
+                    <td class="py-2.5 px-3">86.17%</td>
+                    <td class="py-2.5 px-3">0.8706</td>
+                    <td class="py-2.5 px-3">0.8931</td>
+                    <td class="py-2.5 px-3">0.8816</td>
+                    <td class="py-2.5 px-3">0.9404</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="p-3 bg-slate-800/50 rounded-lg text-xs text-slate-300">
+              <b>Why Recall Matters Most:</b> A False Negative in landslide prediction means human casualties. Random Forest produced the highest Recall (91.91%), while XGBoost achieved the best overall discrimination (AUC: 0.9579).
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 11: Results and Discussion
+      {
+        title: "Results and Discussion",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 8</span>
+              <h2 class="text-2xl font-bold text-white">Results and Discussion: Spatial Hazard Zonation</h2>
+            </div>
+            <div class="grid grid-cols-5 gap-2 text-center text-xs">
+              <div class="p-3 bg-emerald-950/40 border border-emerald-800 rounded-lg"><b class="text-emerald-400 block">VERY LOW</b><span class="text-slate-400 text-[10px]">32.4% Basin<br>P &lt; 0.20</span></div>
+              <div class="p-3 bg-lime-950/40 border border-lime-800 rounded-lg"><b class="text-lime-400 block">LOW</b><span class="text-slate-400 text-[10px]">22.1% Basin<br>0.20 - 0.40</span></div>
+              <div class="p-3 bg-amber-950/40 border border-amber-800 rounded-lg"><b class="text-amber-400 block">MODERATE</b><span class="text-slate-400 text-[10px]">18.7% Basin<br>0.40 - 0.60</span></div>
+              <div class="p-3 bg-orange-950/40 border border-orange-800 rounded-lg"><b class="text-orange-400 block">HIGH</b><span class="text-slate-400 text-[10px]">16.2% Basin<br>0.60 - 0.80</span></div>
+              <div class="p-3 bg-rose-950/40 border border-rose-800 rounded-lg"><b class="text-rose-400 block">VERY HIGH</b><span class="text-slate-400 text-[10px]">10.6% Basin<br>P &ge; 0.80</span></div>
+            </div>
+            <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 text-xs space-y-1.5 leading-relaxed text-slate-300">
+              <b class="text-white">Physical Validation:</b>
+              <p>&bull; Over <b>84% of critical failure nodes</b> coincided with slopes &gt; 32° subjected to anthropogenic road cutting within 100 meters.</p>
+              <p>&bull; Concave topographical hollows (plan curvature &lt; -1.0) with high TWI exhibited double the slide density of convex ridgelines.</p>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 12: Sensitivity Analysis
+      {
+        title: "Sensitivity Analysis",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 9</span>
+              <h2 class="text-2xl font-bold text-white">Sensitivity Analysis (Feature Importance Ranking)</h2>
+            </div>
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center space-x-2">
+                <span class="w-36 text-slate-300">1. Rainfall 72h (mm)</span>
+                <div class="flex-1 bg-slate-800 rounded-full h-3"><div class="bg-blue-500 h-3 rounded-full" style="width: 21.32%"></div></div>
+                <span class="w-12 text-right font-mono text-blue-400 font-bold">21.3%</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="w-36 text-slate-300">2. Slope Angle (°)</span>
+                <div class="flex-1 bg-slate-800 rounded-full h-3"><div class="bg-blue-500 h-3 rounded-full" style="width: 18.36%"></div></div>
+                <span class="w-12 text-right font-mono text-blue-400 font-bold">18.4%</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="w-36 text-slate-300">3. Dist. to Road Cut</span>
+                <div class="flex-1 bg-slate-800 rounded-full h-3"><div class="bg-amber-500 h-3 rounded-full" style="width: 10.93%"></div></div>
+                <span class="w-12 text-right font-mono text-amber-400 font-bold">10.9%</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="w-36 text-slate-300">4. Topographic Wetness</span>
+                <div class="flex-1 bg-slate-800 rounded-full h-3"><div class="bg-cyan-500 h-3 rounded-full" style="width: 8.16%"></div></div>
+                <span class="w-12 text-right font-mono text-cyan-400 font-bold">8.2%</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="w-36 text-slate-300">5. Dist. to Stream</span>
+                <div class="flex-1 bg-slate-800 rounded-full h-3"><div class="bg-slate-600 h-3 rounded-full" style="width: 7.57%"></div></div>
+                <span class="w-12 text-right font-mono text-slate-400">7.6%</span>
+              </div>
+            </div>
+            <div class="p-3 bg-amber-950/20 border border-amber-800/40 rounded-lg text-xs text-amber-300">
+              <b>Key Finding:</b> Rainfall and slope govern ~40% of physical failure, but <b>road cutting (10.9%)</b> is the #1 non-topographic destabilizing trigger.
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 13: Disaster-Management Implications
+      {
+        title: "Disaster-Management Implications",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-rose-400 tracking-wider">Chapter 10</span>
+              <h2 class="text-2xl font-bold text-white">Disaster-Management & Civil Mitigation Implications</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-2">
+                <b class="text-rose-400 text-sm">Dynamic Early Warning (EWS)</b>
+                <p class="text-slate-300 leading-relaxed">
+                  Real-time cloudburst simulation (+80mm anomaly) alerts DDMA & NDRF: Critical slopes surge from 26.8% to 48.2%, activating highway sirens and preventive evacuation.
+                </p>
+              </div>
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-2">
+                <b class="text-emerald-400 text-sm">Civil Engineering Remediation</b>
+                <p class="text-slate-300 leading-relaxed">
+                  &bull; <b>Drainage (80% mitigation):</b> Sub-horizontal perforated HDPE pipes to dissipate pore pressure <i>u_w</i>.<br>
+                  &bull; <b>Structural:</b> Soil nailing (6-9m steel tendons) & gabion retaining walls.<br>
+                  &bull; <b>Bio-Engineering:</b> Deep-rooted Vetiver grass contour hedges.
+                </p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 14: Limitations
+      {
+        title: "Limitations",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-amber-400 tracking-wider">Chapter 11</span>
+              <h2 class="text-2xl font-bold text-white">Limitations of Current Prototype</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="p-3 bg-slate-800/40 rounded border border-slate-700">
+                <b class="text-white block mb-1">1. Static vs Transient Seepage</b>
+                <p class="text-slate-400">TWI acts as a steady-state saturation proxy; does not solve 3D transient Richards differential equations.</p>
+              </div>
+              <div class="p-3 bg-slate-800/40 rounded border border-slate-700">
+                <b class="text-white block mb-1">2. DEM Resolution Constraints</b>
+                <p class="text-slate-400">12.5m/30m satellite DEMs can smooth narrow road cuts unless paired with high-resolution drone LiDAR.</p>
+              </div>
+              <div class="p-3 bg-slate-800/40 rounded border border-slate-700">
+                <b class="text-white block mb-1">3. Seismic Vibration Absence</b>
+                <p class="text-slate-400">Current model is rainfall-focused; does not couple Peak Ground Acceleration (PGA) from earthquakes.</p>
+              </div>
+              <div class="p-3 bg-slate-800/40 rounded border border-slate-700">
+                <b class="text-white block mb-1">4. Regolith Thickness Interpolation</b>
+                <p class="text-slate-400">Depth to intact bedrock is inferred rather than measured through continuous electrical resistivity tomography.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 15: Future Scope
+      {
+        title: "Future Scope",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 12</span>
+              <h2 class="text-2xl font-bold text-white">Future Scope & Research Roadmap</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-2">
+                <span class="text-xl">📡</span>
+                <b class="text-white block text-sm">IoT Sensor Telemetry</b>
+                <p class="text-slate-400 leading-relaxed">Direct 4G/LoRaWAN connection to vibrating wire piezometers & MEMS inclinometers for 15-minute live telemetry updates.</p>
+              </div>
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-2">
+                <span class="text-xl">🧠</span>
+                <b class="text-white block text-sm">Spatio-Temporal GNNs</b>
+                <p class="text-slate-400 leading-relaxed">Transition from tabular models to Spatio-Temporal Graph Neural Networks processing raw Sentinel-1 SAR & Sentinel-2 rasters.</p>
+              </div>
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-2">
+                <span class="text-xl">🌊</span>
+                <b class="text-white block text-sm">Debris Runout Kinematics</b>
+                <p class="text-slate-400 leading-relaxed">Coupling susceptibility with 2D Voellmy numerical fluid models to predict runout velocity and structural impact forces.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 16: Conclusion
+      {
+        title: "Conclusion",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-emerald-400 tracking-wider">Chapter 13</span>
+              <h2 class="text-2xl font-bold text-white">Conclusion</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-2">
+                <b class="text-emerald-400 text-sm">Validated Scientific Outcomes</b>
+                <p class="text-slate-300 leading-relaxed">
+                  &bull; Successfully engineered an interdisciplinary prototype linking Mohr-Coulomb soil mechanics with machine learning.<br>
+                  &bull; XGBoost achieved <b>89.00% Accuracy & 0.9579 ROC-AUC</b>; Random Forest achieved <b>91.91% Recall</b> on 3,000 spatial survey nodes.
+                </p>
+              </div>
+              <div class="p-4 bg-slate-800/40 rounded-xl border border-slate-700 space-y-2">
+                <b class="text-blue-400 text-sm">Production-Ready Deployment</b>
+                <p class="text-slate-300 leading-relaxed">
+                  &bull; Interactive GIS web dashboard running on <b>Node.js, Tailwind CSS, Leaflet, and Chart.js</b>.<br>
+                  &bull; Features real-time what-if slope simulation, cloudburst hazard alerts, and tailored civil engineering mitigation plans.
+                </p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 17: References
+      {
+        title: "References",
+        render: () => `
+          <div class="space-y-5">
+            <div class="border-b border-slate-800 pb-3">
+              <span class="text-xs uppercase font-bold text-blue-400 tracking-wider">Chapter 14</span>
+              <h2 class="text-2xl font-bold text-white">References & Literature</h2>
+            </div>
+            <ol class="list-decimal list-inside text-xs text-slate-300 space-y-2 leading-relaxed">
+              <li><b>Terzaghi, K., Peck, R. B., & Mesri, G. (1996).</b> <i>Soil Mechanics in Engineering Practice (3rd ed.)</i>. John Wiley & Sons.</li>
+              <li><b>Geological Survey of India (GSI). (2020).</b> <i>Standard Operating Procedure for National Landslide Susceptibility Mapping (NLSM)</i>. Ministry of Mines, Govt. of India.</li>
+              <li><b>Chen, T., & Guestrin, C. (2016).</b> <i>XGBoost: A Scalable Tree Boosting System</i>. Proceedings of ACM SIGKDD (KDD '16), 785–794.</li>
+              <li><b>Varnes, D. J. (1978).</b> <i>Slope Movement Types and Processes</i>. Landslides: Analysis and Control, Special Report 176, Transportation Research Board.</li>
+              <li><b>Breiman, L. (2001).</b> <i>Random Forests</i>. Machine Learning, 45(1), 5–32.</li>
+              <li><b>National Disaster Management Authority (NDMA). (2019).</b> <i>National Guidelines on Management of Landslides</i>. Govt. of India.</li>
+            </ol>
+          </div>
+        `
+      },
+
+      // Slide 18: Any Questions ???
+      {
+        title: "Any Questions ???",
+        render: () => `
+          <div class="text-center py-16 space-y-6">
+            <span class="text-4xl">❓</span>
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+              Any Questions ???
+            </h1>
+            <p class="text-sm sm:text-base text-slate-400 max-w-xl mx-auto">
+              The floor is open for queries, feedback, and technical discussion with the Project Evaluation Panel.
+            </p>
+            <div class="pt-4 flex justify-center space-x-3 text-xs">
+              <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">Mohr-Coulomb Mechanics</span>
+              <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">Model Hyperparameters</span>
+              <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">Early Warning Architecture</span>
+            </div>
+          </div>
+        `
+      },
+
+      // Slide 19: Thank You……
+      {
+        title: "Thank You……",
+        render: () => `
+          <div class="text-center py-14 space-y-6">
+            <span class="text-4xl">🙏</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
+              Thank You……
+            </h1>
+            <p class="text-base text-slate-400 max-w-lg mx-auto">
+              GeoGuard-AI: AI-Powered Landslide Susceptibility Prediction System
+            </p>
+            <div class="p-4 bg-slate-800/40 border border-slate-700 rounded-xl max-w-md mx-auto text-xs text-slate-300 space-y-1">
+              <p><b>Department of Computer Science & Engineering</b></p>
+              <p><b>Department of Civil Engineering</b></p>
+              <p class="text-blue-400 pt-2"><a href="/" target="_blank" class="underline">Launch Live Dashboard (localhost:3000)</a></p>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    let currentSlide = 0;
+
+    function renderCurrentSlide() {
+      const slide = slides[currentSlide];
+      const body = document.getElementById("slide-body");
+      body.innerHTML = slide.render();
+      document.getElementById("slide-indicator").innerText = `Slide ${currentSlide + 1} / ${slides.length}`;
+      
+      const card = document.getElementById("slide-card");
+      card.classList.remove("slide-enter");
+      void card.offsetWidth; // trigger reflow
+      card.classList.add("slide-enter");
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        renderCurrentSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderCurrentSlide();
+      }
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard Arrow Navigation
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+        nextSlide();
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        prevSlide();
+      } else if (e.key === "f" || e.key === "F") {
+        toggleFullscreen();
+      }
+    });
+
+    // Initialize first slide
+    renderCurrentSlide();
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "geoguard-ai",
+  "version": "1.0.0",
+  "description": "AI-Powered Landslide Susceptibility Prediction & Early Warning System (3rd Year Engineering Capstone)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node tests/test_engine.js"
+  },
+  "keywords": [
+    "landslide",
+    "geotechnical",
+    "ai",
+    "machine-learning",
+    "early-warning-system",
+    "gis",
+    "tailwind"
+  ],
+  "author": "3rd Year Engineering Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "multer": "^1.4.5-lts.1"
+  }
+}
